@@ -13,7 +13,7 @@ from homeassistant.const import (
 )
 from homeassistant.helpers.restore_state import RestoreEntity
 
-from OWNd.message import (
+from .OWNd.message import (
     OWNEvent,
     OWNDryContactEvent,
     OWNDryContactCommand,

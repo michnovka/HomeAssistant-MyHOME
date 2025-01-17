@@ -26,7 +26,7 @@ from homeassistant.const import (
 )
 from homeassistant.helpers import entity_platform
 from homeassistant.helpers import entity_registry as er
-from OWNd.message import (
+from .OWNd.message import (
     MESSAGE_TYPE_ACTIVE_POWER,
     MESSAGE_TYPE_CURRENT_DAY_CONSUMPTION,
     MESSAGE_TYPE_CURRENT_MONTH_CONSUMPTION,

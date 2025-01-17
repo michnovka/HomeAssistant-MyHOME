@@ -12,7 +12,7 @@ from homeassistant.const import (
     CONF_MAC,
 )
 
-from OWNd.message import (
+from .OWNd.message import (
     OWNAutomationEvent,
     OWNAutomationCommand,
 )
