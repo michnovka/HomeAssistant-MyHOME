@@ -175,9 +175,20 @@ class BusInterface(object):
         return "BusInterface(%s, msg=%r)" % ("String", self.msg)
 
 
-class MyHomeConfigSchema(Schema):
+# NOTE: These wrap a Schema rather than subclassing it. Home Assistant 2026.9
+# replaced voluptuous with probatio (`install_as_voluptuous()`), whose
+# `_compile_nested_schema` shortcut delegates a nested `Schema` straight to its
+# compiled engine — bypassing `__call__` on a subclass. The post-processing below
+# (rekeying devices to "<WHO>-<WHERE>", injecting the entities/icon/model
+# defaults) would silently never run for schemas nested inside `gateway_schema`,
+# leaving the platforms to KeyError on the missing keys. Composition keeps them
+# opaque callables, which both probatio and voluptuous invoke normally.
+class MyHomeConfigSchema:
+    def __init__(self, schema):
+        self._schema = Schema(schema)
+
     def __call__(self, data):
-        data = super().__call__(data)
+        data = self._schema(data)
         _rekeyed_data = {}
         for gateway in data:
             _rekeyed_data[data[gateway][CONF_MAC]] = {}
@@ -208,9 +219,12 @@ class MyHomeConfigSchema(Schema):
         return _rekeyed_data
 
 
-class MyHomeDeviceSchema(Schema):
+class MyHomeDeviceSchema:
+    def __init__(self, schema):
+        self._schema = Schema(schema)
+
     def __call__(self, data):
-        data = super().__call__(data)
+        data = self._schema(data)
         _rekeyed_data = {}
 
         for device in data:
@@ -241,9 +255,12 @@ class MyHomeDeviceSchema(Schema):
         return _rekeyed_data
 
 
-class MyHomeSensorSchema(Schema):
+class MyHomeSensorSchema:
+    def __init__(self, schema):
+        self._schema = Schema(schema)
+
     def __call__(self, data):
-        data = super().__call__(data)
+        data = self._schema(data)
         _rekeyed_data = {}
 
         for device in data:
