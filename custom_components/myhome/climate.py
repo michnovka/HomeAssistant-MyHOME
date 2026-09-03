@@ -20,7 +20,7 @@ from homeassistant.const import (
     UnitOfTemperature,
 )
 
-from OWNd.message import (
+from .OWNd.message import (
     OWNHeatingEvent,
     OWNHeatingCommand,
     CLIMATE_MODE_OFF,
@@ -182,9 +182,7 @@ class MyHOMEClimate(MyHOMEEntity, ClimateEntity):
 
         Only used by the generic entity update service.
         """
-        await self._gateway_handler.send_status_request(
-            OWNHeatingCommand.status(self._where)
-        )
+        await self._gateway_handler.send_status_request(OWNHeatingCommand.status(self._where))
 
     @property
     def target_temperature(self) -> float:

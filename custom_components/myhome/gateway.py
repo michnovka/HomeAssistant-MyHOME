@@ -28,8 +28,8 @@ from homeassistant.components.sensor import (
 )
 from homeassistant.components.climate import DOMAIN as CLIMATE
 
-from OWNd.connection import OWNSession, OWNEventSession, OWNCommandSession, OWNGateway
-from OWNd.message import (
+from .OWNd.connection import OWNSession, OWNEventSession, OWNCommandSession, OWNGateway
+from .OWNd.message import (
     OWNMessage,
     OWNLightingEvent,
     OWNLightingCommand,
@@ -443,7 +443,6 @@ class MyHOMEGatewayHandler:
             self.log_id,
             message,
         )
-
     async def send_status_request(self, message: OWNCommand):
         await self.send_buffer.put({"message": message, "is_status_request": True})
         LOGGER.debug(

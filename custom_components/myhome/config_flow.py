@@ -32,8 +32,8 @@ from homeassistant.const import (
 )
 from homeassistant.core import callback
 from homeassistant.helpers import device_registry as dr
-from OWNd.connection import OWNGateway, OWNSession
-from OWNd.discovery import find_gateways
+from .OWNd.connection import OWNGateway, OWNSession
+from .OWNd.discovery import find_gateways
 
 from .const import (
     CONF_ADDRESS,
